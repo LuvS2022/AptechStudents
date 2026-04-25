@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Result Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      height: 100vh;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .result-box {
+      display: none;
+    }
+  </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card p-4">
+        <h3 class="text-center mb-3">Aptech Student Result</h3>
+
+        <div id="form-box">
+          <div class="mb-3">
+            <label>ID Card Number</label>
+            <input type="text" id="id" class="form-control" placeholder="Enter ID">
+          </div>
+
+          <div class="mb-3">
+            <label>Date of Birth</label>
+            <input type="date" id="dob" class="form-control">
+          </div>
+          <div class="container">
+            <div class="row">
+                <div class="col-sm-6"><button class="btn btn-primary w-100" onclick="checkResult()">Show Result</button></div>
+                <div class="col-sm-6"> <button class="btn btn-success w-100" onclick="resetPage()">Reset</button></div>
+            </div>
+          </div>
+          <h1><p id="error" class="text-danger mt-2 text-center"></p></h1>
+        </div>
+
+        <div id="result-box" class="result-box text-center">
+          <h4 id="name"></h4>
+          <p id="marks"></p>
+          <button class="btn btn-success mt-3" onclick="resetPage()">Reset</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Stored student data in JavaScript
+  const students = [
+    { id: "101", dob: "2005-05-10", name: "Rahul Sharma", marks: 85 },
+    { id: "102", dob: "2004-08-15", name: "Priya Verma", marks: 92 },
+    { id: "103", dob: "2005-12-20", name: "Aman Singh", marks: 78 }
+  ];
+
+  function checkResult() {
+    const id = document.getElementById("id").value;
+    const dob = document.getElementById("dob").value;
+    const error = document.getElementById("error");
+
+    error.innerText = "";
+
+    if (id === "" || dob === "") {
+      error.innerText = "Please fill all fields";
+      return;
+    }
+
+    const student = students.find(s => s.id === id && s.dob === dob);
+
+    if (student) {
+      document.getElementById("form-box").style.display = "none";
+      document.getElementById("result-box").style.display = "block";
+
+      document.getElementById("name").innerText = "Name: " + student.name;
+      document.getElementById("marks").innerText = "Marks: " + student.marks;
+    } else {
+      error.innerText = "Invalid ID or Date of Birth";
+    }
+  }
+  function resetPage() {
+    document.getElementById("form-box").style.display = "block";
+    document.getElementById("result-box").style.display = "none";
+    document.getElementById("id").value = "";
+    document.getElementById("dob").value = "";
+    document.getElementById("error").innerText = "";
+  }
+</script>
+
+</body>
+</html>
